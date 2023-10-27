@@ -7,5 +7,5 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: |
-          jar cvf groupeX.war * && ls
+          jar cvf group3.war * && ls
   
