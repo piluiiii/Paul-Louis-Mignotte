@@ -1,4 +1,4 @@
-name: Industrialisation continue sur le serveur AWS (Tomcat)
+name: Industrialisation continue sur le serveur AWS
 on: push
 jobs:
   Deploy:
@@ -7,5 +7,13 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: |
-          jar cvf group3.war * && ls
-  
+          jar cvf MonAppli.war *
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST_DNS }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: ${{ secrets.DEPLOY_PORT }}
+        source: "MonAppli.war"
+        target: "/opt/tomcat/webapps"
